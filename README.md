@@ -1,0 +1,345 @@
+<!--
+
+@license Apache-2.0
+
+Copyright (c) 2026 The Stdlib Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+
+
+<details>
+  <summary>
+    About stdlib...
+  </summary>
+  <p>We believe in a future in which the web is a preferred environment for numerical computation. To help realize this future, we've built stdlib. stdlib is a standard library, with an emphasis on numerical and scientific computation, written in JavaScript (and C) for execution in browsers and in Node.js.</p>
+  <p>The library is fully decomposable, being architected in such a way that you can swap out and mix and match APIs and functionality to cater to your exact preferences and use cases.</p>
+  <p>When you use stdlib, you can be absolutely certain that you are using the most thorough, rigorous, well-written, studied, documented, tested, measured, and high-quality code out there.</p>
+  <p>To join us in bringing numerical computing to the web, get started by checking us out on <a href="https://github.com/stdlib-js/stdlib">GitHub</a>, and please consider <a href="https://opencollective.com/stdlib">financially supporting stdlib</a>. We greatly appreciate your continued support!</p>
+</details>
+
+# cfloornf
+
+[![NPM version][npm-image]][npm-url] [![Build Status][test-image]][test-url] [![Coverage Status][coverage-image]][coverage-url] <!-- [![dependencies][dependencies-image]][dependencies-url] -->
+
+> Round each component of a single-precision complex floating-point number to the nearest multiple of `10^n` toward negative infinity.
+
+<section class="installation">
+
+## Installation
+
+```bash
+npm install @stdlib/math-base-special-cfloornf
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
+-   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
+
+</section>
+
+<section class="usage">
+
+## Usage
+
+```javascript
+var cfloornf = require( '@stdlib/math-base-special-cfloornf' );
+```
+
+#### cfloornf( z, n )
+
+Rounds each component of a single-precision complex floating-point number to the nearest multiple of `10^n` toward negative infinity.
+
+```javascript
+var Complex64 = require( '@stdlib/complex-float32-ctor' );
+
+// Round components to the nearest ten:
+var v = cfloornf( new Complex64( -15.0, 15.0 ), 1 );
+// returns <Complex64>[ -20.0, 10.0 ]
+
+// If n = 0, `cfloornf` behaves like `cfloorf`:
+v = cfloornf( new Complex64( -3.14, 3.14 ), 0 );
+// returns <Complex64>[ -4.0, 3.0 ]
+
+// Round components to the nearest hundred:
+v = cfloornf( new Complex64( -150.0, 150.0 ), 2 );
+// returns <Complex64>[ -200.0, 100.0 ]
+
+v = cfloornf( new Complex64( NaN, NaN ), 0 );
+// returns <Complex64>[ NaN, NaN ]
+```
+
+</section>
+
+<!-- /.usage -->
+
+<section class="notes">
+
+## Notes
+
+-   When operating on [floating-point numbers][ieee754] in bases other than `2`, rounding to specified digits can be **inexact**. For example,
+
+    ```javascript
+    var Complex64 = require( '@stdlib/complex-float32-ctor' );
+    var f32 = require( '@stdlib/number-float64-base-to-float32' );
+
+    var x = f32( f32( -0.2 ) - f32( 0.1 ) );
+    // returns -0.30000001192092896
+
+    // Should round components to -0.3:
+    var v = cfloornf( new Complex64( x, x ), -8 );
+    // returns <Complex64>[ -0.30000001192092896, -0.30000001192092896 ]
+    ```
+
+</section>
+
+<!-- /.notes -->
+
+<section class="examples">
+
+## Examples
+
+<!-- eslint no-undef: "error" -->
+
+```javascript
+var Complex64Array = require( '@stdlib/array-complex64' );
+var uniform = require( '@stdlib/random-array-uniform' );
+var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
+var logEachMap = require( '@stdlib/console-log-each-map' );
+var cfloornf = require( '@stdlib/math-base-special-cfloornf' );
+
+// Generate an array of random complex numbers:
+var z = new Complex64Array( uniform( 200, -50.0, 50.0, {
+    'dtype': 'float32'
+}));
+
+// Generate an array of random integer powers of 10:
+var n = discreteUniform( 100, -5, 0, {
+    'dtype': 'int32'
+});
+
+// Round each component of each complex number to the nearest multiple of `10^n` toward negative infinity:
+logEachMap( 'cfloornf(%s, %d) = %s', z, n, cfloornf );
+```
+
+</section>
+
+<!-- /.examples -->
+
+<!-- C interface documentation. -->
+
+* * *
+
+<section class="c">
+
+## C APIs
+
+<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
+
+<section class="intro">
+
+</section>
+
+<!-- /.intro -->
+
+<!-- C usage documentation. -->
+
+<section class="usage">
+
+### Usage
+
+```c
+#include "stdlib/math/base/special/cfloornf.h"
+```
+
+#### stdlib_base_cfloornf( z, n )
+
+Rounds each component of a single-precision complex floating-point number to the nearest multiple of `10^n` toward negative infinity.
+
+```c
+#include "stdlib/complex/float32/ctor.h"
+#include "stdlib/complex/float32/real.h"
+#include "stdlib/complex/float32/imag.h"
+
+stdlib_complex64_t z = stdlib_complex64( -3.141592653589793f, 3.141592653589793f );
+stdlib_complex64_t out = stdlib_base_cfloornf( z, -2 );
+
+float re = stdlib_complex64_real( out );
+// returns -3.15f
+
+float im = stdlib_complex64_imag( out );
+// returns 3.14f
+```
+
+The function accepts the following arguments:
+
+-   **z**: `[in] stdlib_complex64_t` input value.
+-   **n**: `[in] int32_t` integer power of 10.
+
+```c
+stdlib_complex64_t stdlib_base_cfloornf( const stdlib_complex64_t z, const int32_t n );
+```
+
+</section>
+
+<!-- /.usage -->
+
+<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
+
+<section class="notes">
+
+</section>
+
+<!-- /.notes -->
+
+<!-- C API usage examples. -->
+
+<section class="examples">
+
+### Examples
+
+```c
+#include "stdlib/math/base/special/cfloornf.h"
+#include "stdlib/complex/float32/ctor.h"
+#include "stdlib/complex/float32/reim.h"
+#include <stdio.h>
+
+int main( void ) {
+    const stdlib_complex64_t x[] = {
+        stdlib_complex64( 3.14f, 1.5f ),
+        stdlib_complex64( -3.14f, -1.5f ),
+        stdlib_complex64( 0.0f, 0.0f ),
+        stdlib_complex64( 0.0f/0.0f, 0.0f/0.0f )
+    };
+
+    stdlib_complex64_t v;
+    stdlib_complex64_t y;
+    float re1;
+    float im1;
+    float re2;
+    float im2;
+    int i;
+    for ( i = 0; i < 4; i++ ) {
+        v = x[ i ];
+        y = stdlib_base_cfloornf( v, -2 );
+        stdlib_complex64_reim( v, &re1, &im1 );
+        stdlib_complex64_reim( y, &re2, &im2 );
+        printf( "cfloornf(%f + %fi, -2) = %f + %fi\n", re1, im1, re2, im2 );
+    }
+}
+```
+
+</section>
+
+<!-- /.examples -->
+
+</section>
+
+<!-- /.c -->
+
+<!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
+
+<section class="related">
+
+</section>
+
+<!-- /.related -->
+
+<!-- Section for all links. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
+
+
+<section class="main-repo" >
+
+* * *
+
+## Notice
+
+This package is part of [stdlib][stdlib], a standard library for JavaScript and Node.js, with an emphasis on numerical and scientific computing. The library provides a collection of robust, high performance libraries for mathematics, statistics, streams, utilities, and more.
+
+For more information on the project, filing bug reports and feature requests, and guidance on how to develop [stdlib][stdlib], see the main project [repository][stdlib].
+
+#### Community
+
+[![Chat][chat-image]][chat-url]
+
+---
+
+## License
+
+See [LICENSE][stdlib-license].
+
+
+## Copyright
+
+Copyright &copy; 2016-2026. The Stdlib [Authors][stdlib-authors].
+
+</section>
+
+<!-- /.stdlib -->
+
+<!-- Section for all links. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
+
+<section class="links">
+
+[npm-image]: http://img.shields.io/npm/v/@stdlib/math-base-special-cfloornf.svg
+[npm-url]: https://npmjs.org/package/@stdlib/math-base-special-cfloornf
+
+[test-image]: https://github.com/stdlib-js/math-base-special-cfloornf/actions/workflows/test.yml/badge.svg?branch=main
+[test-url]: https://github.com/stdlib-js/math-base-special-cfloornf/actions/workflows/test.yml?query=branch:main
+
+[coverage-image]: https://img.shields.io/codecov/c/github/stdlib-js/math-base-special-cfloornf/main.svg
+[coverage-url]: https://codecov.io/github/stdlib-js/math-base-special-cfloornf?branch=main
+
+<!--
+
+[dependencies-image]: https://img.shields.io/david/stdlib-js/math-base-special-cfloornf.svg
+[dependencies-url]: https://david-dm.org/stdlib-js/math-base-special-cfloornf/main
+
+-->
+
+[chat-image]: https://img.shields.io/badge/zulip-join_chat-brightgreen.svg
+[chat-url]: https://stdlib.zulipchat.com
+
+[stdlib]: https://github.com/stdlib-js/stdlib
+
+[stdlib-authors]: https://github.com/stdlib-js/stdlib/graphs/contributors
+
+[umd]: https://github.com/umdjs/umd
+[es-module]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+
+[deno-url]: https://github.com/stdlib-js/math-base-special-cfloornf/tree/deno
+[deno-readme]: https://github.com/stdlib-js/math-base-special-cfloornf/blob/deno/README.md
+[umd-url]: https://github.com/stdlib-js/math-base-special-cfloornf/tree/umd
+[umd-readme]: https://github.com/stdlib-js/math-base-special-cfloornf/blob/umd/README.md
+[esm-url]: https://github.com/stdlib-js/math-base-special-cfloornf/tree/esm
+[esm-readme]: https://github.com/stdlib-js/math-base-special-cfloornf/blob/esm/README.md
+[branches-url]: https://github.com/stdlib-js/math-base-special-cfloornf/blob/main/branches.md
+
+[stdlib-license]: https://raw.githubusercontent.com/stdlib-js/math-base-special-cfloornf/main/LICENSE
+
+[ieee754]: https://en.wikipedia.org/wiki/IEEE_754-1985
+
+<!-- <related-links> -->
+
+<!-- </related-links> -->
+
+</section>
+
+<!-- /.links -->
