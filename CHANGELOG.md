@@ -4,7 +4,7 @@
 
 <section class="release" id="unreleased">
 
-## Unreleased (2026-08-15)
+## Unreleased (2026-08-27)
 
 <section class="features">
 
@@ -22,6 +22,7 @@
 
 <details>
 
+-   [`9a46793`](https://github.com/stdlib-js/stdlib/commit/9a4679369f5ad122cd1b41fba5eead58ca84faf2) - **docs:** add equations [(#14696)](https://github.com/stdlib-js/stdlib/pull/14696) _(by Karan Anand)_
 -   [`8fcc6d8`](https://github.com/stdlib-js/stdlib/commit/8fcc6d8933dd40f78c8df90b336e5e59d6f616ac) - **feat:** add `math/base/special/cfloornf` [(#11989)](https://github.com/stdlib-js/stdlib/pull/11989) _(by Nirmal Jyoti Biswas, Athan Reines, Karan Anand)_
 
 </details>
