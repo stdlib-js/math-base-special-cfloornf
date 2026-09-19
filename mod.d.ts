@@ -1,4 +1,4 @@
-/**
+/*
 * @license Apache-2.0
 *
 * Copyright (c) 2026 The Stdlib Authors.
@@ -16,26 +16,28 @@
 * limitations under the License.
 */
 
-#ifndef STDLIB_MATH_BASE_SPECIAL_CFLOORNF_H
-#define STDLIB_MATH_BASE_SPECIAL_CFLOORNF_H
+// TypeScript Version: 4.1
 
-#include "stdlib/complex/float32/ctor.h"
-#include <stdint.h>
+/// <reference types="https://cdn.jsdelivr.net/gh/stdlib-js/types@main/index.d.ts"/>
 
-/*
-* If C++, prevent name mangling so that the compiler emits a binary file having undecorated names, thus mirroring the behavior of a C compiler.
-*/
-#ifdef __cplusplus
-extern "C" {
-#endif
+import { Complex64 } from '@stdlib/types/complex';
 
 /**
 * Rounds each component of a single-precision complex floating-point number to the nearest multiple of `10^n` toward negative infinity.
+*
+* @param z - input value
+* @param n - integer power of 10
+* @returns result
+*
+* @example
+* var Complex64 = require( '@stdlib/complex-float32-ctor' );
+*
+* var v = cfloornf( new Complex64( 55.5, -33.3 ), 1 );
+* // returns <Complex64>[ 50.0, -40.0 ]
 */
-stdlib_complex64_t stdlib_base_cfloornf( const stdlib_complex64_t z, const int32_t n );
+declare function cfloornf( z: Complex64, n: number ): Complex64;
 
-#ifdef __cplusplus
-}
-#endif
 
-#endif // !STDLIB_MATH_BASE_SPECIAL_CFLOORNF_H
+// EXPORTS //
+
+export = cfloornf;
